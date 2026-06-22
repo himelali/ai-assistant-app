@@ -23,6 +23,8 @@ type Props = PressableProps & {
   loading?: boolean;
   icon?: string;
   iconName?: string;
+  iconColor?: string;
+  textColor?: string;
   style?: StyleProp<ViewStyle>;
 };
 
@@ -34,6 +36,8 @@ export function AppButton({
   loading,
   icon,
   iconName,
+  iconColor,
+  textColor,
   style,
   disabled,
   ...props
@@ -62,12 +66,12 @@ export function AppButton({
             <AppIcon
               name={iconName}
               size={small ? 15 : 17}
-              color={variant === 'ghost' ? theme.text : colors.surface}
+              color={iconColor ?? (variant === 'ghost' ? theme.text : colors.surface)}
             />
           ) : icon ? (
-            <Text style={[styles.icon, variant === 'ghost' && {color: theme.text}]}>{icon}</Text>
+            <Text style={[styles.icon, variant === 'ghost' && {color: theme.text}, iconColor && {color: iconColor}]}>{icon}</Text>
           ) : null}
-          <Text style={[styles.text, variant === 'ghost' && {color: theme.text}]}>{title}</Text>
+          <Text style={[styles.text, variant === 'ghost' && {color: theme.text}, textColor && {color: textColor}]}>{title}</Text>
         </>
       )}
     </Pressable>

@@ -24,7 +24,7 @@ export function HelpSupportScreen() {
 
   return (
     <AppScreen style={styles.safe}>
-      <AppHeader title={t('helpTitle')} onBack={() => navigation.navigate('Settings')} />
+      <AppHeader title={t('helpTitle')} onBack={() => navigation.goBack()} />
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={[typography.sectionHeader, {color: theme.text}]}>{t('settingsSupport')}</Text>
         <Text style={[typography.body, styles.intro, {color: theme.textSoft}]}>Find quick guidance for the current UI-only TypeAI prototype.</Text>

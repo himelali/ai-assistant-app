@@ -17,7 +17,7 @@ export function AboutTypeAIScreen() {
 
   return (
     <AppScreen style={styles.safe}>
-      <AppHeader title={t('aboutTitle')} onBack={() => navigation.navigate('Settings')} />
+      <AppHeader title={t('aboutTitle')} onBack={() => navigation.goBack()} />
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.hero}>
           <View style={styles.logo}>

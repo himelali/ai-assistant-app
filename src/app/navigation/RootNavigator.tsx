@@ -20,6 +20,8 @@ import {KeyboardSetupScreen} from '../../features/keyboard/KeyboardSetupScreen';
 import {NotificationsScreen} from '../../features/notifications/NotificationsScreen';
 import {HelpSupportScreen} from '../../features/support/HelpSupportScreen';
 import {AboutTypeAIScreen} from '../../features/support/AboutTypeAIScreen';
+import {InvoiceScreen} from '../../features/profile/InvoiceScreen';
+import {stackTransitionOptions} from './transitions';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -39,7 +41,7 @@ export function RootNavigator() {
 
   return (
     <NavigationContainer theme={navigationTheme}>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Navigator screenOptions={{headerShown: false, ...stackTransitionOptions}}>
         <Stack.Screen name="Auth" component={AuthNavigator} />
         <Stack.Screen name="Main" component={MainTabNavigator} />
         <Stack.Screen name="KeyboardSetup" component={KeyboardSetupScreen} />
@@ -56,6 +58,7 @@ export function RootNavigator() {
         <Stack.Screen name="Notifications" component={NotificationsScreen} />
         <Stack.Screen name="HelpSupport" component={HelpSupportScreen} />
         <Stack.Screen name="AboutTypeAI" component={AboutTypeAIScreen} />
+        <Stack.Screen name="Invoice" component={InvoiceScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

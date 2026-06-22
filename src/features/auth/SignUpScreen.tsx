@@ -4,9 +4,8 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {AuthStackParamList} from '../../app/config/routes';
 import {AppScreen} from '../../shared/components/AppScreen';
 import {AppIcon} from '../../shared/components/AppIcon';
+import {AppButton} from '../../shared/components/AppButton';
 import {GradientButton} from '../../shared/components/GradientButton';
-import {GhostButton} from '../../shared/components/GhostButton';
-import {DarkButton} from '../../shared/components/DarkButton';
 import {useToast} from '../../shared/components/Toast';
 import {useLocalization} from '../../shared/localization/LocalizationContext';
 import {colors} from '../../shared/theme/colors';
@@ -48,9 +47,9 @@ export function SignUpScreen({navigation}: Props) {
 
         <GradientButton title={t('signUpCreate')} block onPress={enterApp} />
         <Text style={[styles.divider, {color: theme.textFaint}]}>{t('signUpWith')}</Text>
-        <GhostButton title={t('authGoogle')} iconName="google" block onPress={() => showToast('Google sign-up mocked')} />
-        <GhostButton title={t('authFacebook')} iconName="facebook" block onPress={() => showToast('Facebook sign-up mocked')} style={styles.stackBtn} />
-        <DarkButton title={t('authApple')} iconName="apple" block onPress={() => showToast('Apple sign-up mocked')} style={styles.stackBtn} />
+        <AppButton title={t('authGoogle')} iconName="google" iconColor={colors.surface} textColor={colors.surface} block onPress={() => showToast('Google sign-up mocked')} style={styles.googleBtn} />
+        <AppButton title={t('authFacebook')} iconName="facebook" iconColor={colors.surface} textColor={colors.surface} block onPress={() => showToast('Facebook sign-up mocked')} style={[styles.stackBtn, styles.facebookBtn]} />
+        <AppButton title={t('authApple')} iconName="apple" iconColor={colors.surface} textColor={colors.surface} block onPress={() => showToast('Apple sign-up mocked')} style={[styles.stackBtn, styles.appleBtn]} />
 
         <Text style={[styles.signup, {color: theme.textSoft}]}>
           {t('signUpAlready')} <Text style={styles.link} onPress={() => navigation.navigate('Login')}>{t('authSignIn')}</Text>
@@ -70,6 +69,9 @@ const styles = StyleSheet.create({
   input: {height: 45, borderRadius: radius.md, borderWidth: 1, paddingHorizontal: 13, marginBottom: 12, fontSize: 14},
   divider: {textAlign: 'center', fontSize: 12, marginVertical: 15},
   stackBtn: {marginTop: 10},
+  googleBtn: {backgroundColor: '#4285F4', borderColor: '#4285F4'},
+  facebookBtn: {backgroundColor: '#1877F2', borderColor: '#1877F2'},
+  appleBtn: {backgroundColor: '#000000', borderColor: '#000000'},
   signup: {textAlign: 'center', marginTop: 20, fontSize: 13},
   link: {color: colors.primaryStart, fontWeight: '600'},
   prototypeButton: {marginTop: 22},

@@ -12,6 +12,7 @@ import {AiHubScreen} from '../../features/aiHub/AiHubScreen';
 import {HistoryScreen} from '../../features/history/HistoryScreen';
 import {KeyboardSetupScreen} from '../../features/keyboard/KeyboardSetupScreen';
 import {ProfileScreen} from '../../features/profile/ProfileScreen';
+import {tabTransitionOptions} from './transitions';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 const inactiveNavColor = colors.inkFaint;
@@ -65,6 +66,7 @@ export function MainTabNavigator() {
     <Tab.Navigator
       screenOptions={({route}) => ({
         headerShown: false,
+        ...tabTransitionOptions,
         tabBarActiveTintColor: colors.primaryStart,
         tabBarInactiveTintColor: inactiveNavColor,
         tabBarShowLabel: false,

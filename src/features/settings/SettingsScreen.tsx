@@ -7,11 +7,8 @@ import {RootStackParamList} from '../../app/config/routes';
 import {AppCard} from '../../shared/components/AppCard';
 import {AppHeader} from '../../shared/components/AppHeader';
 import {AppIcon} from '../../shared/components/AppIcon';
-import {BottomSheet} from '../../shared/components/BottomSheet';
-import {LanguageChip} from '../../shared/components/LanguageChip';
 import {useToast} from '../../shared/components/Toast';
 import {useLocalization} from '../../shared/localization/LocalizationContext';
-import {LanguageCode} from '../../shared/localization/translations';
 import {colors} from '../../shared/theme/colors';
 import {useAppTheme} from '../../shared/theme/ThemeContext';
 import {typography} from '../../shared/theme/typography';
@@ -50,19 +47,11 @@ export function SettingsScreen() {
   const navigation = useNavigation<Nav>();
   const {showToast} = useToast();
   const {isDark, theme, toggleTheme} = useAppTheme();
-  const {language, languageNativeLabel, languageOptions, setLanguage, t} = useLocalization();
-  const [languageSheet, setLanguageSheet] = useState(false);
+  const {t} = useLocalization();
 
   async function handleThemeToggle() {
     const nextMode = await toggleTheme();
     showToast(`${nextMode === 'dark' ? 'Dark' : 'Light'} theme enabled`);
-  }
-
-  async function handleLanguageSelect(nextLanguage: LanguageCode) {
-    await setLanguage(nextLanguage);
-    const option = languageOptions.find(item => item.code === nextLanguage);
-    setLanguageSheet(false);
-    showToast(`${t('settingsLanguageSet')} ${option?.nativeLabel ?? nextLanguage}`);
   }
 
   async function shareTypeAI() {
@@ -95,10 +84,10 @@ export function SettingsScreen() {
 
   return (
     <AppScreen style={styles.safe}>
-      <AppHeader title={t('settingsTitle')} onBack={() => navigation.navigate('Main', {screen: 'Profile'})} />
+      <AppHeader title={t('settingsTitle')} onBack={() => navigation.goBack()} />
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={[typography.sectionHeader, {color: theme.text}]}>{t('settingsPreferences')}</Text>
-        <AppCard style={styles.card}><Row icon="translate" title={t('settingsLanguage')} subtitle={languageNativeLabel} onPress={() => setLanguageSheet(true)} /><Row icon={isDark ? 'white-balance-sunny' : 'moon-waning-crescent'} title={isDark ? t('settingsThemeLight') : t('settingsThemeDark')} subtitle={isDark ? t('settingsDarkActive') : t('settingsLightActive')} onPress={handleThemeToggle} /><Row icon="keyboard-outline" title={t('settingsKeyboardSettings')} subtitle={t('settingsKeyboardSubtitle')} onPress={() => navigation.navigate('KeyboardSetup')} /></AppCard>
+        <AppCard style={styles.card}><Row icon={isDark ? 'white-balance-sunny' : 'moon-waning-crescent'} title={isDark ? t('settingsThemeLight') : t('settingsThemeDark')} subtitle={isDark ? t('settingsDarkActive') : t('settingsLightActive')} onPress={handleThemeToggle} /><Row icon="keyboard-outline" title={t('settingsKeyboardSettings')} subtitle={t('settingsKeyboardSubtitle')} onPress={() => navigation.navigate('KeyboardSetup')} /></AppCard>
         <Text style={[typography.sectionHeader, {color: theme.text}]}>{t('settingsAccount')}</Text>
         <AppCard style={styles.card}><Row icon="history" title={t('settingsAiHistory')} onPress={() => navigation.navigate('Main' as never)} /><Row icon="cloud-sync-outline" title={t('settingsSync')} subtitle={t('settingsEnabled')} onPress={() => showToast('Sync mocked')} /><Row icon="trash-can-outline" title={t('settingsClearCache')} onPress={() => showToast('Cache cleared')} /></AppCard>
         <Text style={[typography.sectionHeader, {color: theme.text}]}>{t('settingsPrivacy')}</Text>
@@ -108,19 +97,6 @@ export function SettingsScreen() {
         <Text style={[typography.sectionHeader, {color: theme.text}]}>{t('settingsNotifications')}</Text>
         <AppCard style={styles.card}><ToggleRow icon="bell-ring-outline" title={t('settingsPush')} /><ToggleRow icon="email-newsletter" title={t('settingsEmailUpdates')} /></AppCard>
       </ScrollView>
-      <BottomSheet visible={languageSheet} onClose={() => setLanguageSheet(false)}>
-        <Text style={[typography.h2, styles.sheetTitle, {color: theme.text}]}>{t('settingsChooseLanguage')}</Text>
-        <View style={styles.langs}>
-          {languageOptions.map(option => (
-            <LanguageChip
-              key={option.code}
-              label={`${option.nativeLabel} · ${option.label}`}
-              selected={option.code === language}
-              onPress={() => handleLanguageSelect(option.code)}
-            />
-          ))}
-        </View>
-      </BottomSheet>
     </AppScreen>
   );
 }
@@ -135,6 +111,4 @@ const styles = StyleSheet.create({
   rowTitle: {fontSize: 13, fontWeight: '600', color: colors.ink},
   chevron: {color: colors.inkFaint, fontSize: 20},
   danger: {color: colors.error},
-  sheetTitle: {fontSize: 20, marginBottom: 14},
-  langs: {gap: 10},
 });

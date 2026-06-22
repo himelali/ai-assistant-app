@@ -21,10 +21,17 @@ export function NotificationsScreen() {
   const {showToast} = useToast();
   const {t} = useLocalization();
   const [notifications, setNotifications] = useState(initialNotifications);
+  const [activeRemoveId, setActiveRemoveId] = useState<string | null>(null);
 
   function markAllRead() {
     setNotifications(items => items.map(item => ({...item, unread: false})));
     showToast('Notifications marked as read');
+  }
+
+  function removeNotification(id: string) {
+    setNotifications(items => items.filter(item => item.id !== id));
+    setActiveRemoveId(null);
+    showToast('Notification removed');
   }
 
   return (
@@ -33,19 +40,27 @@ export function NotificationsScreen() {
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={[typography.sectionHeader, {color: theme.text}]}>Today</Text>
         {notifications.map(item => (
-          <AppCard key={item.id} style={styles.card}>
-            <View style={[styles.iconWrap, {backgroundColor: isDark ? colors.darkSurface : colors.surfaceAlt}]}>
-              <AppIcon name={item.icon} size={21} color={isDark ? colors.accent : colors.primaryStart} />
-            </View>
-            <View style={styles.textWrap}>
-              <View style={styles.titleRow}>
-                <Text style={[styles.title, {color: theme.text}]}>{item.title}</Text>
-                {item.unread ? <View style={styles.dot} /> : null}
+          <Pressable key={item.id} onPress={() => setActiveRemoveId(current => current === item.id ? null : item.id)}>
+            <AppCard style={styles.card}>
+              <View style={[styles.iconWrap, {backgroundColor: isDark ? colors.darkSurface : colors.surfaceAlt}]}>
+                <AppIcon name={item.icon} size={21} color={isDark ? colors.accent : colors.primaryStart} />
               </View>
-              <Text style={[typography.body, styles.body, {color: theme.textSoft}]}>{item.body}</Text>
-              <Text style={[typography.small, {color: theme.textFaint}]}>{item.time}</Text>
-            </View>
-          </AppCard>
+              <View style={styles.textWrap}>
+                <View style={styles.titleRow}>
+                  <Text style={[styles.title, {color: theme.text}]}>{item.title}</Text>
+                  {item.unread ? <View style={styles.dot} /> : null}
+                </View>
+                <Text style={[typography.body, styles.body, {color: theme.textSoft}]}>{item.body}</Text>
+                <Text style={[typography.small, {color: theme.textFaint}]}>{item.time}</Text>
+                {activeRemoveId === item.id ? (
+                  <Pressable onPress={() => removeNotification(item.id)} style={styles.removeBtn}>
+                    <AppIcon name="trash-can-outline" size={16} color={colors.surface} />
+                    <Text style={styles.removeText}>Remove</Text>
+                  </Pressable>
+                ) : null}
+              </View>
+            </AppCard>
+          </Pressable>
         ))}
       </ScrollView>
     </AppScreen>
@@ -63,4 +78,6 @@ const styles = StyleSheet.create({
   title: {fontSize: 14, lineHeight: 20, fontWeight: '600'},
   body: {marginTop: 3, marginBottom: 6},
   dot: {width: 8, height: 8, borderRadius: 4, backgroundColor: colors.accent},
+  removeBtn: {alignSelf: 'flex-start', marginTop: 10, borderRadius: 10, paddingVertical: 7, paddingHorizontal: 10, backgroundColor: colors.error, flexDirection: 'row', alignItems: 'center', gap: 6},
+  removeText: {color: colors.surface, fontSize: 12, fontWeight: '600'},
 });

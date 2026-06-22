@@ -4,8 +4,7 @@ import {AppScreen} from '../../shared/components/AppScreen';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {AuthStackParamList} from '../../app/config/routes';
 import {GradientButton} from '../../shared/components/GradientButton';
-import {GhostButton} from '../../shared/components/GhostButton';
-import {DarkButton} from '../../shared/components/DarkButton';
+import {AppButton} from '../../shared/components/AppButton';
 import {AppIcon} from '../../shared/components/AppIcon';
 import {useToast} from '../../shared/components/Toast';
 import {useLocalization} from '../../shared/localization/LocalizationContext';
@@ -42,9 +41,9 @@ export function LoginScreen({navigation}: Props) {
         <Text style={styles.forgot} onPress={() => showToast('Password reset is mocked')}>{t('authForgotPassword')}</Text>
         <GradientButton title={t('authSignIn')} block onPress={enterApp} />
         <Text style={[styles.divider, {color: theme.textFaint}]}>{t('authContinueWith')}</Text>
-        <GhostButton title={t('authGoogle')} iconName="google" block onPress={() => showToast('Google sign-in mocked')} />
-        <GhostButton title={t('authFacebook')} iconName="facebook" block onPress={() => showToast('Facebook sign-in mocked')} style={styles.stackBtn} />
-        <DarkButton title={t('authApple')} iconName="apple" block onPress={() => showToast('Apple sign-in mocked')} style={styles.stackBtn} />
+        <AppButton title={t('authGoogle')} iconName="google" iconColor={colors.surface} textColor={colors.surface} block onPress={() => showToast('Google sign-in mocked')} style={styles.googleBtn} />
+        <AppButton title={t('authFacebook')} iconName="facebook" iconColor={colors.surface} textColor={colors.surface} block onPress={() => showToast('Facebook sign-in mocked')} style={[styles.stackBtn, styles.facebookBtn]} />
+        <AppButton title={t('authApple')} iconName="apple" iconColor={colors.surface} textColor={colors.surface} block onPress={() => showToast('Apple sign-in mocked')} style={[styles.stackBtn, styles.appleBtn]} />
         <Text style={[styles.signup, {color: theme.textSoft}]}>
           {t('authNoAccount')} <Text style={styles.link} onPress={() => navigation.navigate('SignUp')}>{t('authSignUp')}</Text>
         </Text>
@@ -64,6 +63,9 @@ const styles = StyleSheet.create({
   forgot: {alignSelf: 'flex-end', color: colors.primaryStart, fontWeight: '600', fontSize: 11, marginBottom: 18},
   divider: {textAlign: 'center', color: colors.inkFaint, fontSize: 11, marginVertical: 15},
   stackBtn: {marginTop: 10},
+  googleBtn: {backgroundColor: '#4285F4', borderColor: '#4285F4'},
+  facebookBtn: {backgroundColor: '#1877F2', borderColor: '#1877F2'},
+  appleBtn: {backgroundColor: '#000000', borderColor: '#000000'},
   signup: {textAlign: 'center', color: colors.inkSoft, marginTop: 20, fontSize: 12},
   link: {color: colors.primaryStart, fontWeight: '600'},
   prototypeButton: {marginTop: 22},

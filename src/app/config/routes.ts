@@ -1,6 +1,8 @@
+import {NavigatorScreenParams} from '@react-navigation/native';
+
 export type RootStackParamList = {
   Auth: undefined;
-  Main: undefined;
+  Main: NavigatorScreenParams<MainTabParamList> | undefined;
   KeyboardSetup: undefined;
   KeyboardPreview: undefined;
   Rewrite: undefined;
@@ -15,6 +17,7 @@ export type RootStackParamList = {
   Notifications: undefined;
   HelpSupport: undefined;
   AboutTypeAI: undefined;
+  Invoice: {invoiceId: string};
 };
 
 export type AuthStackParamList = {

@@ -29,7 +29,16 @@ export function KeyboardSetupScreen() {
   ];
   return (
     <AppScreen style={styles.safe}>
-      <AppHeader title="AI Keyboard" onBack={() => navigation.navigate('Settings')} />
+      <AppHeader
+        title="AI Keyboard"
+        onBack={() => {
+          if (navigation.canGoBack()) {
+            navigation.goBack();
+            return;
+          }
+          navigation.navigate('Settings');
+        }}
+      />
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={[typography.h1, {color: theme.text}]}>Set up your AI keyboard</Text>
         <Text style={[typography.body, styles.intro, {color: theme.textSoft}]}>This prototype prepares the app to become a native keyboard. Suggestions are mock data now and can be connected to your server later.</Text>

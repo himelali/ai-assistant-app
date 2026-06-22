@@ -25,7 +25,8 @@ import {useAppTheme} from '../../shared/theme/ThemeContext';
 import {typography} from '../../shared/theme/typography';
 
 type Nav = NativeStackNavigationProp<RootStackParamList>;
-type Sheet = 'password' | 'logout' | 'delete' | 'photo' | null;
+type Sheet = 'password' | 'logout' | 'delete' | 'photo' | 'account' | null;
+type ConnectedAccount = 'Google' | 'Facebook' | 'Apple';
 
 function Row({icon, title, subtitle, action, onPress, danger}: {icon: string; title: string; subtitle?: string; action?: string; onPress?: () => void; danger?: boolean}) {
   const {theme, isDark} = useAppTheme();
@@ -48,6 +49,27 @@ export function ProfileScreen() {
   const [sheet, setSheet] = useState<Sheet>(null);
   const [photoSource, setPhotoSource] = useState<'Camera' | 'Gallery' | null>(null);
   const [profilePhotoUri, setProfilePhotoUri] = useState<string | null>(null);
+  const [accounts, setAccounts] = useState<Record<ConnectedAccount, boolean>>({
+    Google: true,
+    Facebook: false,
+    Apple: true,
+  });
+  const [pendingAccount, setPendingAccount] = useState<ConnectedAccount | null>(null);
+
+  function requestAccountChange(account: ConnectedAccount) {
+    setPendingAccount(account);
+    setSheet('account');
+  }
+
+  function confirmAccountChange() {
+    if (!pendingAccount) {
+      return;
+    }
+    const nextConnected = !accounts[pendingAccount];
+    setAccounts(prev => ({...prev, [pendingAccount]: nextConnected}));
+    setSheet(null);
+    showToast(`${pendingAccount} ${nextConnected ? 'connected' : 'disconnected'}`);
+  }
 
   async function selectProfilePhoto(source: 'Camera' | 'Gallery') {
     const options: CameraOptions & ImageLibraryOptions = {
@@ -107,9 +129,9 @@ export function ProfileScreen() {
         <Text style={[typography.sectionHeader, {color: theme.text}]}>{t('profileAccount')}</Text>
         <AppCard style={styles.card}><Row icon="lock-outline" title={t('profilePassword')} subtitle={t('profileChangePassword')} onPress={() => setSheet('password')} /><Row icon="credit-card-outline" title={t('profileSubscription')} subtitle={t('profileFreePlan')} onPress={() => navigation.navigate('Premium')} /></AppCard>
         <Text style={[typography.sectionHeader, {color: theme.text}]}>{t('profileBilling')}</Text>
-        <AppCard style={styles.card}><Row icon="file-document-outline" title="Pro Plan Annual" subtitle="Invoice #INV-2024-001" action="$99.99" /><Row icon="file-document-multiple-outline" title="Pro Plan Monthly" subtitle="Invoice #INV-2024-002" action="$12.99" /></AppCard>
+        <AppCard style={styles.card}><Row icon="file-document-outline" title="Pro Plan Annual" subtitle="Invoice #INV-2024-001" action="$99.99" onPress={() => navigation.navigate('Invoice', {invoiceId: 'INV-2024-001'})} /><Row icon="file-document-multiple-outline" title="Pro Plan Monthly" subtitle="Invoice #INV-2024-002" action="$12.99" onPress={() => navigation.navigate('Invoice', {invoiceId: 'INV-2024-002'})} /></AppCard>
         <Text style={[typography.sectionHeader, {color: theme.text}]}>{t('profileConnected')}</Text>
-        <AppCard style={styles.card}><Row icon="google" title="Google" subtitle="Connected" action="Disconnect" onPress={() => showToast('Google disconnected')} /><Row icon="facebook" title="Facebook" subtitle="Not connected" action="Connect" onPress={() => showToast('Facebook connected')} /><Row icon="apple" title="Apple" subtitle="Connected" action="Disconnect" onPress={() => showToast('Apple disconnected')} /></AppCard>
+        <AppCard style={styles.card}><Row icon="google" title="Google" subtitle={accounts.Google ? 'Connected' : 'Not connected'} action={accounts.Google ? 'Disconnect' : 'Connect'} onPress={() => requestAccountChange('Google')} /><Row icon="facebook" title="Facebook" subtitle={accounts.Facebook ? 'Connected' : 'Not connected'} action={accounts.Facebook ? 'Disconnect' : 'Connect'} onPress={() => requestAccountChange('Facebook')} /><Row icon="apple" title="Apple" subtitle={accounts.Apple ? 'Connected' : 'Not connected'} action={accounts.Apple ? 'Disconnect' : 'Connect'} onPress={() => requestAccountChange('Apple')} /></AppCard>
         <Text style={[typography.sectionHeader, styles.danger]}>{t('profileDanger')}</Text>
         <AppCard style={[styles.card, styles.dangerCard]}><Row icon="logout" title={t('profileSignOut')} subtitle="Log out from this device" danger onPress={() => setSheet('logout')} /><Row icon="delete-outline" title={t('profileDelete')} subtitle="Permanently delete all data" danger onPress={() => setSheet('delete')} /></AppCard>
       </ScrollView>
@@ -144,6 +166,18 @@ export function ProfileScreen() {
         <Text style={[typography.h2, styles.sheetTitle, {color: theme.text}]}>Delete Account?</Text>
         <Text style={[typography.body, styles.sheetBody, {color: theme.textSoft}]}>This mock action does not delete real data.</Text>
         <AppButton title="Delete My Account" variant="danger" block onPress={() => {setSheet(null); showToast('Delete account mocked');}} />
+        <GhostButton title="Cancel" block onPress={() => setSheet(null)} style={styles.sheetBtn} />
+      </BottomSheet>
+      <BottomSheet visible={sheet === 'account'} onClose={() => setSheet(null)}>
+        <Text style={[typography.h2, styles.sheetTitle, {color: theme.text}]}>
+          {pendingAccount && accounts[pendingAccount] ? 'Disconnect account?' : 'Connect account?'}
+        </Text>
+        <Text style={[typography.body, styles.sheetBody, {color: theme.textSoft}]}>
+          {pendingAccount
+            ? `${pendingAccount} will be ${accounts[pendingAccount] ? 'disconnected from' : 'connected to'} this TypeAI prototype account.`
+            : 'Confirm account change.'}
+        </Text>
+        <GradientButton title={pendingAccount && accounts[pendingAccount] ? 'Disconnect' : 'Connect'} block onPress={confirmAccountChange} />
         <GhostButton title="Cancel" block onPress={() => setSheet(null)} style={styles.sheetBtn} />
       </BottomSheet>
     </AppScreen>

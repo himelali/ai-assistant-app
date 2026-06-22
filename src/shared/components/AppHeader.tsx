@@ -18,7 +18,12 @@ export function AppHeader({title, right, back = true, onBack}: Props) {
   const navigation = useNavigation<any>();
   const {theme} = useAppTheme();
 
-  function goHome() {
+  function handleBack() {
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+      return;
+    }
+
     navigation.navigate('Main', {screen: 'Home'});
   }
 
@@ -28,7 +33,7 @@ export function AppHeader({title, right, back = true, onBack}: Props) {
         <Pressable
           accessibilityRole="button"
           accessibilityLabel="Go back"
-          onPress={onBack ?? goHome}
+          onPress={onBack ?? handleBack}
           style={[styles.iconBtn, {backgroundColor: theme.surface, borderColor: theme.line}]}>
           <AppIcon name="chevron-left" size={25} color={theme.text} />
         </Pressable>
