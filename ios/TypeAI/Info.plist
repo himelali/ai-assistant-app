@@ -24,18 +24,33 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>MaterialCommunityIcons.ttf</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
-	  <!-- Do not change NSAllowsArbitraryLoads to true, or you will risk app rejection! -->
 		<key>NSAllowsArbitraryLoads</key>
 		<false/>
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>TypeAI may use local network access for future device-to-device setup and diagnostics.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>TypeAI will use camera access so you can take a new profile photo.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>TypeAI will use microphone access for future voice typing and voice summaries.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>TypeAI will use photo library access so you can choose a profile photo from your gallery.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>TypeAI may save edited profile images to your photo library in a future release.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>TypeAI will use speech recognition for future voice-to-text assistant features.</string>
+	<key>RCTNewArchEnabled</key>
+	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>

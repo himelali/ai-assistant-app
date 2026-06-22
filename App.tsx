@@ -1,43 +1,43 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React from 'react';
+import {StatusBar, StyleSheet, View} from 'react-native';
+import {enableScreens} from 'react-native-screens';
+import {AppProviders} from './src/app/providers/AppProviders';
+import {RootNavigator} from './src/app/navigation/RootNavigator';
+import {useLocalization} from './src/shared/localization/LocalizationContext';
+import {useAppTheme} from './src/shared/theme/ThemeContext';
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+declare const process: {env: {JEST_WORKER_ID?: string}};
+
+if (!process.env.JEST_WORKER_ID) {
+  enableScreens();
+}
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-
   return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+    <AppProviders>
       <AppContent />
-    </SafeAreaProvider>
+    </AppProviders>
   );
 }
 
 function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
+  const {theme, isThemeLoaded} = useAppTheme();
+  const {isLocalizationLoaded} = useLocalization();
+
+  if (!isThemeLoaded || !isLocalizationLoaded) {
+    return <View style={[styles.loading, {backgroundColor: theme.canvas}]} />;
+  }
 
   return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
+    <>
+      <StatusBar barStyle={theme.statusBarStyle} backgroundColor={theme.canvas} />
+      <RootNavigator />
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  loading: {
     flex: 1,
   },
 });

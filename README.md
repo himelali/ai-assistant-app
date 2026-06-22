@@ -1,4 +1,61 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+This is the React Native CLI prototype for **TypeAI — AI Keyboard & Communication Assistant**.
+
+## TypeAI Prototype
+
+### How to run
+
+```sh
+npm install
+npm start
+npm run android
+```
+
+For iOS:
+
+```sh
+bundle install
+bundle exec pod install --project-directory=ios
+npm run ios
+```
+
+### Current status
+
+This app is UI-only. It uses React Native, TypeScript, React Navigation, local React state, reusable components, and mock data from `src/shared/mock/mockData.ts`.
+
+No real API calls, AI calls, payments, authentication, native keyboard permissions, notification access, or clipboard automation are implemented.
+
+### Implemented UI areas
+
+- Auth flow: Splash, onboarding, login, and main tabs.
+- Main tabs: Home, Keyboard, Ask AI, History, Profile.
+- Tool screens: keyboard setup/preview, generic external-app smart suggestion preview, rewrite, translate, voice AI, voice summary, email writer, freelancer assistant, status generator, premium, settings, and profile bottom sheets.
+- Mock interactions: AI thinking states, loading skeletons, copy/share toasts, local filters, selected chips, generated mock outputs, and mock payment processing state.
+
+### Future API integration points
+
+- Replace mock data in `src/shared/mock/mockData.ts` with service calls.
+- Add API client modules under `src/shared/utils` or a future `src/shared/services` directory.
+- Wire AI Hub, Rewrite, Translate, Voice Summary, Email Writer, Freelancer Assistant, and Status Generator screens to real endpoints.
+- Replace mock authentication in `src/features/auth/LoginScreen.tsx` with a real auth provider.
+- Replace premium mock processing in `src/features/premium/PremiumScreen.tsx` with platform billing.
+
+### Future Android keyboard integration
+
+- Add a native Android input method service in `android/app/src/main`.
+- Bridge keyboard state and suggestion insertion back to React Native where appropriate.
+- Implement notification listener permission flow for external-app incoming-message suggestions.
+- Keep `KeyboardSetupScreen` and `KeyboardPreviewScreen` as the user-facing setup and education surfaces.
+
+### Future iOS keyboard extension integration
+
+- Add an iOS keyboard extension target in Xcode.
+- Implement Full Access education and permission guidance.
+- Share settings and account state through an app group if needed.
+- Use the current keyboard preview UI as the product-facing explanation before native extension work.
+
+---
+
+This project was originally bootstrapped using [React Native Community CLI](https://github.com/react-native-community/cli).
 
 # Getting Started
 
