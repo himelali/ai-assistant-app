@@ -5,6 +5,7 @@ import {AiThinking} from '../../shared/components/AiThinking';
 import {AppCard} from '../../shared/components/AppCard';
 import {AppHeader} from '../../shared/components/AppHeader';
 import {AppIcon} from '../../shared/components/AppIcon';
+import {CopyableText} from '../../shared/components/CopyableText';
 import {GradientButton} from '../../shared/components/GradientButton';
 import {GhostButton} from '../../shared/components/GhostButton';
 import {LanguageChip} from '../../shared/components/LanguageChip';
@@ -15,12 +16,14 @@ import {colors} from '../../shared/theme/colors';
 import {radius} from '../../shared/theme/radius';
 import {useAppTheme} from '../../shared/theme/ThemeContext';
 import {typography} from '../../shared/theme/typography';
+import {copyToClipboard} from '../../shared/utils/clipboard';
 
 export function EmailWriterScreen() {
   const [template, setTemplate] = useState('Business');
   const [loading, setLoading] = useState(false);
   const {showToast} = useToast();
   const {theme} = useAppTheme();
+  const draftText = `Subject: ${emailDraft.subject}\n\n${emailDraft.body}`;
   function generate() {
     setLoading(true);
     setTimeout(() => {setLoading(false); showToast('Email drafted');}, 900);
@@ -44,7 +47,15 @@ export function EmailWriterScreen() {
         <GradientButton title="Generate Email" block onPress={generate} />
         <Text style={[typography.eyebrow, {color: theme.textFaint}]}>Generated draft</Text>
         <AppCard>
-          {loading ? <><AiThinking label="Drafting email..." /><View style={styles.loading}><SkeletonLine width="62%" /><SkeletonLine /><SkeletonLine width="86%" /><SkeletonLine width="72%" /></View></> : <><Text style={[styles.subject, {color: theme.textFaint}]}>Subject: {emailDraft.subject}</Text><Text style={[styles.body, {color: theme.text}]}>{emailDraft.body}</Text><View style={styles.actions}><GradientButton title="Copy" small style={styles.action} onPress={() => showToast('Copied email')} /><GhostButton title="Share" small style={styles.action} onPress={() => showToast('Share mocked')} /><GhostButton title="Regenerate" small style={styles.action} onPress={generate} /></View></>}
+          {loading ? <><AiThinking label="Drafting email..." /><View style={styles.loading}><SkeletonLine width="62%" /><SkeletonLine /><SkeletonLine width="86%" /><SkeletonLine width="72%" /></View></> : (
+            <>
+              <CopyableText text={draftText} toastMessage="Copied email draft">
+                <Text style={[styles.subject, {color: theme.textFaint}]}>Subject: {emailDraft.subject}</Text>
+                <Text style={[styles.body, {color: theme.text}]}>{emailDraft.body}</Text>
+              </CopyableText>
+              <View style={styles.actions}><GradientButton title="Copy" small style={styles.action} onPress={() => {copyToClipboard(draftText); showToast('Copied email draft');}} /><GhostButton title="Share" small style={styles.action} onPress={() => showToast('Share mocked')} /><GhostButton title="Regenerate" small style={styles.action} onPress={generate} /></View>
+            </>
+          )}
         </AppCard>
       </ScrollView>
     </AppScreen>

@@ -4,6 +4,7 @@ import {AppScreen} from '../../shared/components/AppScreen';
 import {AiThinking} from '../../shared/components/AiThinking';
 import {AppCard} from '../../shared/components/AppCard';
 import {AppHeader} from '../../shared/components/AppHeader';
+import {CopyableText} from '../../shared/components/CopyableText';
 import {GradientButton} from '../../shared/components/GradientButton';
 import {GhostButton} from '../../shared/components/GhostButton';
 import {LanguageChip} from '../../shared/components/LanguageChip';
@@ -15,6 +16,7 @@ import {colors} from '../../shared/theme/colors';
 import {radius} from '../../shared/theme/radius';
 import {useAppTheme} from '../../shared/theme/ThemeContext';
 import {typography} from '../../shared/theme/typography';
+import {copyToClipboard} from '../../shared/utils/clipboard';
 
 export function FreelancerAssistantScreen() {
   const [platform, setPlatform] = useState('Fiverr');
@@ -23,6 +25,7 @@ export function FreelancerAssistantScreen() {
   const [loading, setLoading] = useState(false);
   const {showToast} = useToast();
   const {theme} = useAppTheme();
+  const output = freelancerOutputs[type as keyof typeof freelancerOutputs];
   function generate() {
     setLoading(true);
     setTimeout(() => {setLoading(false); showToast('Generated');}, 900);
@@ -44,7 +47,14 @@ export function FreelancerAssistantScreen() {
         />
         <GradientButton title="Generate" block onPress={generate} />
         <Text style={[typography.eyebrow, {color: theme.textFaint}]}>Preview output</Text>
-        <AppCard>{loading ? <><AiThinking label="Writing..." /><View style={styles.loading}><SkeletonLine /><SkeletonLine width="88%" /><SkeletonLine width="68%" /></View></> : <><Text style={[styles.output, {color: theme.text}]}>{freelancerOutputs[type as keyof typeof freelancerOutputs]}</Text><View style={styles.actions}><GradientButton title="Copy" small style={styles.action} onPress={() => showToast('Copied')} /><GhostButton title="Share" small style={styles.action} onPress={() => showToast('Share mocked')} /><GhostButton title="Regenerate" small style={styles.action} onPress={generate} /></View></>}</AppCard>
+        <AppCard>{loading ? <><AiThinking label="Writing..." /><View style={styles.loading}><SkeletonLine /><SkeletonLine width="88%" /><SkeletonLine width="68%" /></View></> : (
+          <>
+            <CopyableText text={output} toastMessage="Copied freelancer output">
+              <Text style={[styles.output, {color: theme.text}]}>{output}</Text>
+            </CopyableText>
+            <View style={styles.actions}><GradientButton title="Copy" small style={styles.action} onPress={() => {copyToClipboard(output); showToast('Copied freelancer output');}} /><GhostButton title="Share" small style={styles.action} onPress={() => showToast('Share mocked')} /><GhostButton title="Regenerate" small style={styles.action} onPress={generate} /></View>
+          </>
+        )}</AppCard>
       </ScrollView>
     </AppScreen>
   );

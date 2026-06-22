@@ -3,6 +3,7 @@ import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {AppScreen} from '../../shared/components/AppScreen';
 import {AppCard} from '../../shared/components/AppCard';
 import {AppHeader} from '../../shared/components/AppHeader';
+import {CopyableText} from '../../shared/components/CopyableText';
 import {GradientButton} from '../../shared/components/GradientButton';
 import {GhostButton} from '../../shared/components/GhostButton';
 import {LanguageChip} from '../../shared/components/LanguageChip';
@@ -11,12 +12,14 @@ import {translationOutputs} from '../../shared/mock/mockData';
 import {colors} from '../../shared/theme/colors';
 import {useAppTheme} from '../../shared/theme/ThemeContext';
 import {typography} from '../../shared/theme/typography';
+import {copyToClipboard} from '../../shared/utils/clipboard';
 
 export function TranslateScreen() {
   const langs = Object.keys(translationOutputs);
   const [lang, setLang] = useState('English');
   const {showToast} = useToast();
   const {theme} = useAppTheme();
+  const translated = translationOutputs[lang as keyof typeof translationOutputs];
   return (
     <AppScreen style={styles.safe}>
       <AppHeader title="Translation" />
@@ -24,9 +27,18 @@ export function TranslateScreen() {
         <View style={styles.selector}><Text style={styles.selectorActive}>Bangla</Text><Text style={styles.swap}>⇄</Text><Text style={[styles.selectorText, {backgroundColor: theme.surface, borderColor: theme.line, color: theme.text}]}>{lang}</Text></View>
         <View style={styles.chips}>{langs.map(item => <LanguageChip key={item} label={item} selected={lang === item} onPress={() => setLang(item)} />)}</View>
         <Text style={[typography.eyebrow, {color: theme.textFaint}]}>Original</Text>
-        <AppCard style={styles.card}><Text style={[styles.text, {color: theme.text}]}>{translationOutputs.Bangla}</Text></AppCard>
+        <AppCard style={styles.card}>
+          <CopyableText text={translationOutputs.Bangla} toastMessage="Copied original text">
+            <Text style={[styles.text, {color: theme.text}]}>{translationOutputs.Bangla}</Text>
+          </CopyableText>
+        </AppCard>
         <Text style={[typography.eyebrow, {color: theme.textFaint}]}>Translated</Text>
-        <AppCard style={styles.card}><Text style={[styles.text, {color: theme.text}]}>{translationOutputs[lang as keyof typeof translationOutputs]}</Text><View style={styles.actions}><GradientButton title="Share" small style={styles.action} onPress={() => showToast('Share mocked')} /><GhostButton title="Copy" small style={styles.action} onPress={() => showToast('Copied to clipboard')} /></View></AppCard>
+        <AppCard style={styles.card}>
+          <CopyableText text={translated} toastMessage="Copied translation">
+            <Text style={[styles.text, {color: theme.text}]}>{translated}</Text>
+          </CopyableText>
+          <View style={styles.actions}><GradientButton title="Share" small style={styles.action} onPress={() => showToast('Share mocked')} /><GhostButton title="Copy" small style={styles.action} onPress={() => {copyToClipboard(translated); showToast('Copied translation');}} /></View>
+        </AppCard>
       </ScrollView>
     </AppScreen>
   );

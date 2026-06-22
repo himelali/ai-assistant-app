@@ -4,6 +4,7 @@ import {AppScreen} from '../../shared/components/AppScreen';
 import {AiThinking} from '../../shared/components/AiThinking';
 import {AppCard} from '../../shared/components/AppCard';
 import {AppIcon} from '../../shared/components/AppIcon';
+import {CopyableText} from '../../shared/components/CopyableText';
 import {useToast} from '../../shared/components/Toast';
 import {aiReplies} from '../../shared/mock/mockData';
 import {colors} from '../../shared/theme/colors';
@@ -78,7 +79,9 @@ export function AiHubScreen() {
               if (item.role === 'thinking') return <AiThinking key={index} />;
               return (
                 <View key={index} style={[styles.bubble, item.role === 'user' ? styles.userBubble : styles.aiBubble]}>
-                  <Text style={item.role === 'user' ? styles.userText : [styles.aiText, {color: theme.text}]}>{item.text}</Text>
+                  <CopyableText text={item.text} toastMessage={item.role === 'user' ? 'Copied prompt' : 'Copied AI reply'}>
+                    <Text style={item.role === 'user' ? styles.userText : [styles.aiText, {color: theme.text}]}>{item.text}</Text>
+                  </CopyableText>
                 </View>
               );
             })

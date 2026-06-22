@@ -4,12 +4,14 @@ import {AppScreen} from '../../shared/components/AppScreen';
 import {AppCard} from '../../shared/components/AppCard';
 import {AppHeader} from '../../shared/components/AppHeader';
 import {AppIcon} from '../../shared/components/AppIcon';
+import {CopyableText} from '../../shared/components/CopyableText';
 import {GradientButton} from '../../shared/components/GradientButton';
 import {GhostButton} from '../../shared/components/GhostButton';
 import {useToast} from '../../shared/components/Toast';
 import {colors} from '../../shared/theme/colors';
 import {useAppTheme} from '../../shared/theme/ThemeContext';
 import {typography} from '../../shared/theme/typography';
+import {copyToClipboard} from '../../shared/utils/clipboard';
 
 const sections = [
   ['Main Point', 'The client wants the homepage redesign delivered before the festival sale begins.'],
@@ -21,6 +23,7 @@ export function VoiceSummaryScreen() {
   const [playing, setPlaying] = useState(false);
   const {showToast} = useToast();
   const {theme} = useAppTheme();
+  const summaryText = sections.map(([title, body]) => `${title}: ${body}`).join('\n');
   return (
     <AppScreen style={styles.safe}>
       <AppHeader title="Voice Note Summary" />
@@ -35,8 +38,15 @@ export function VoiceSummaryScreen() {
           </AppCard>
         </Pressable>
         <Text style={[typography.eyebrow, {color: theme.textFaint}]}>AI generated summary</Text>
-        {sections.map(([title, body]) => <AppCard key={title} style={styles.section}><Text style={styles.sectionTitle}>{title}</Text><Text style={[typography.body, {color: theme.textSoft}]}>{body}</Text></AppCard>)}
-        <View style={styles.actions}><GradientButton title="Share" block style={styles.action} onPress={() => showToast('Share mocked')} /><GhostButton title="Copy" block style={styles.action} onPress={() => showToast('Copied summary')} /></View>
+        {sections.map(([title, body]) => (
+          <AppCard key={title} style={styles.section}>
+            <CopyableText text={`${title}: ${body}`} toastMessage={`Copied ${title.toLowerCase()}`}>
+              <Text style={styles.sectionTitle}>{title}</Text>
+              <Text style={[typography.body, {color: theme.textSoft}]}>{body}</Text>
+            </CopyableText>
+          </AppCard>
+        ))}
+        <View style={styles.actions}><GradientButton title="Share" block style={styles.action} onPress={() => showToast('Share mocked')} /><GhostButton title="Copy" block style={styles.action} onPress={() => {copyToClipboard(summaryText); showToast('Copied summary');}} /></View>
       </ScrollView>
     </AppScreen>
   );

@@ -3,6 +3,8 @@ import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {colors} from '../theme/colors';
 import {radius} from '../theme/radius';
 import {useAppTheme} from '../theme/ThemeContext';
+import {useToast} from './Toast';
+import {copyToClipboard} from '../utils/clipboard';
 
 export function SuggestionCard({
   label,
@@ -16,10 +18,26 @@ export function SuggestionCard({
   onPress?: () => void;
 }) {
   const {theme} = useAppTheme();
+  const {showToast} = useToast();
+
+  function handlePress() {
+    if (selected) {
+      copyToClipboard(text);
+      showToast('Copied suggestion');
+      return;
+    }
+    onPress?.();
+  }
 
   return (
     <Pressable
-      onPress={onPress}
+      onPress={handlePress}
+      onLongPress={() => {
+        copyToClipboard(text);
+        showToast('Copied suggestion');
+      }}
+      accessibilityRole="button"
+      accessibilityLabel={`${selected ? 'Copy' : 'Select'} ${label} suggestion`}
       style={[
         styles.card,
         {backgroundColor: theme.surface, borderColor: theme.line},

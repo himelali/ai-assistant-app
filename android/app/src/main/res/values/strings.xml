@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TypeAI</string>
+    <string name="typeai_keyboard_name">TypeAI Keyboard</string>
 </resources>

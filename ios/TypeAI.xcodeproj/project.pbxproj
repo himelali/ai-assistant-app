@@ -12,9 +12,38 @@
 		722EF127C5598E2D2F32101D /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		B1A4D8EE5853FF8B80199C85 /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF5DAE76834B412AB267D37 /* KeyboardViewController.swift */; };
+		CE30949ECEE4005B3FE11CB2 /* TypeAIKeyboard.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 634145DDB79987D4A85FAC3F /* TypeAIKeyboard.appex */; };
+		F6D2260EFC8C735A7CEE0697 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AB6657AB05222D8BA617B29 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		D9585C616416A53FED2D22BC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F1C32606620BFC58C4B1726E;
+			remoteInfo = TypeAIKeyboard;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		15F37A57D0D0C35E808630AF /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				CE30949ECEE4005B3FE11CB2 /* TypeAIKeyboard.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		0AB6657AB05222D8BA617B29 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		0D3DEF6134F613E36C28C663 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* TypeAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TypeAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = TypeAI/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = TypeAI/Info.plist; sourceTree = "<group>"; };
@@ -22,8 +51,10 @@
 		3B4392A12AC88292D35C810B /* Pods-TypeAI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TypeAI.debug.xcconfig"; path = "Target Support Files/Pods-TypeAI/Pods-TypeAI.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-TypeAI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TypeAI.release.xcconfig"; path = "Target Support Files/Pods-TypeAI/Pods-TypeAI.release.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-TypeAI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TypeAI.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		634145DDB79987D4A85FAC3F /* TypeAIKeyboard.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; name = TypeAIKeyboard.appex; path = TypeAIKeyboard.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = TypeAI/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = TypeAI/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		EAF5DAE76834B412AB267D37 /* KeyboardViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KeyboardViewController.swift; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -33,6 +64,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C80B921A6F3F58F76C31292 /* libPods-TypeAI.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8A9788DE41981A713008D27D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F6D2260EFC8C735A7CEE0697 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,8 +95,17 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				5DCACB8F33CDC322A6C60F78 /* libPods-TypeAI.a */,
+				432F390601107D54A012E1BE /* iOS */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		432F390601107D54A012E1BE /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				0AB6657AB05222D8BA617B29 /* Foundation.framework */,
+			);
+			name = iOS;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -75,6 +123,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				B460F168088B53766F879371 /* TypeAIKeyboard */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -85,8 +134,19 @@
 			isa = PBXGroup;
 			children = (
 				13B07F961A680F5B00A75B9A /* TypeAI.app */,
+				634145DDB79987D4A85FAC3F /* TypeAIKeyboard.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		B460F168088B53766F879371 /* TypeAIKeyboard */ = {
+			isa = PBXGroup;
+			children = (
+				EAF5DAE76834B412AB267D37 /* KeyboardViewController.swift */,
+				0D3DEF6134F613E36C28C663 /* Info.plist */,
+			);
+			name = TypeAIKeyboard;
+			path = TypeAIKeyboard;
 			sourceTree = "<group>";
 		};
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
@@ -112,15 +172,34 @@
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */,
 				E235C05ADACE081382539298 /* [CP] Copy Pods Resources */,
+				15F37A57D0D0C35E808630AF /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				CD663134CAE5B4F69E4D4F72 /* PBXTargetDependency */,
 			);
 			name = TypeAI;
 			productName = TypeAI;
 			productReference = 13B07F961A680F5B00A75B9A /* TypeAI.app */;
 			productType = "com.apple.product-type.application";
+		};
+		F1C32606620BFC58C4B1726E /* TypeAIKeyboard */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D90C984C50C4D94139D0DD73 /* Build configuration list for PBXNativeTarget "TypeAIKeyboard" */;
+			buildPhases = (
+				9010EA20C512800FE3BBBEF3 /* Sources */,
+				8A9788DE41981A713008D27D /* Frameworks */,
+				BA5E677189405EEBBC83D125 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TypeAIKeyboard;
+			productName = TypeAIKeyboard;
+			productReference = 634145DDB79987D4A85FAC3F /* TypeAIKeyboard.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -132,6 +211,10 @@
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
 						LastSwiftMigration = 1120;
+						ProvisioningStyle = Automatic;
+					};
+					F1C32606620BFC58C4B1726E = {
+						CreatedOnToolsVersion = 16.0;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -150,6 +233,7 @@
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* TypeAI */,
+				F1C32606620BFC58C4B1726E /* TypeAIKeyboard */,
 			);
 		};
 /* End PBXProject section */
@@ -162,6 +246,13 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				722EF127C5598E2D2F32101D /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BA5E677189405EEBBC83D125 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -192,13 +283,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TypeAI/Pods-TypeAI-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TypeAI/Pods-TypeAI-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -235,13 +322,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TypeAI/Pods-TypeAI-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TypeAI/Pods-TypeAI-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -259,7 +342,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9010EA20C512800FE3BBBEF3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B1A4D8EE5853FF8B80199C85 /* KeyboardViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CD663134CAE5B4F69E4D4F72 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = TypeAIKeyboard;
+			target = F1C32606620BFC58C4B1726E /* TypeAIKeyboard */;
+			targetProxy = D9585C616416A53FED2D22BC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
@@ -482,6 +582,49 @@
 			};
 			name = Release;
 		};
+		9F5141D687FF8CF70BE2D96A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = G3J6GG672D;
+				INFOPLIST_FILE = TypeAIKeyboard/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.himelali.typeai.keyboard;
+				PRODUCT_BUNDLE_PACKAGE_TYPE = "XPC!";
+				PRODUCT_NAME = TypeAIKeyboard;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DADC7610BB145E86459B0651 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = G3J6GG672D;
+				INFOPLIST_FILE = TypeAIKeyboard/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.himelali.typeai.keyboard;
+				PRODUCT_BUNDLE_PACKAGE_TYPE = "XPC!";
+				PRODUCT_NAME = TypeAIKeyboard;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -499,6 +642,15 @@
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
 				83CBBA211A601CBA00E9B192 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D90C984C50C4D94139D0DD73 /* Build configuration list for PBXNativeTarget "TypeAIKeyboard" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9F5141D687FF8CF70BE2D96A /* Release */,
+				DADC7610BB145E86459B0651 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
