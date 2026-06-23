@@ -54,7 +54,6 @@ export function SignUpScreen({navigation}: Props) {
         <Text style={[styles.signup, {color: theme.textSoft}]}>
           {t('signUpAlready')} <Text style={styles.link} onPress={() => navigation.navigate('Login')}>{t('authSignIn')}</Text>
         </Text>
-        <GradientButton title={t('authContinueToApp')} block onPress={enterApp} style={styles.prototypeButton} />
       </ScrollView>
     </AppScreen>
   );
@@ -74,5 +73,4 @@ const styles = StyleSheet.create({
   appleBtn: {backgroundColor: '#000000', borderColor: '#000000'},
   signup: {textAlign: 'center', marginTop: 20, fontSize: 13},
   link: {color: colors.primaryStart, fontWeight: '600'},
-  prototypeButton: {marginTop: 22},
 });

@@ -25,12 +25,16 @@ export function StatusGeneratorScreen() {
         <Text style={[typography.eyebrow, {color: theme.textFaint}]}>Platform</Text>
         <View style={styles.chips}>{['Facebook', 'WhatsApp', 'Instagram'].map(item => <LanguageChip key={item} label={item} selected={platform === item} onPress={() => setPlatform(item)} />)}</View>
         <Text style={[typography.eyebrow, {color: theme.textFaint}]}>Category</Text>
-        <View style={styles.category}>{['Funny', 'Motivation', 'Love', 'Festival', 'Islamic'].map(item => <ToneChip key={item} label={item} selected={category === item} onPress={() => setCategory(item)} />)}</View>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.category}>
+          {['Funny', 'Motivation', 'Love', 'Festival', 'Islamic', 'Friendship', 'Business', 'Travel'].map(item => (
+            <ToneChip key={item} label={item} selected={category === item} onPress={() => setCategory(item)} />
+          ))}
+        </ScrollView>
         <Text style={[typography.eyebrow, {color: theme.textFaint}]}>Generated status cards</Text>
         {current.map(status => (
-          <CopyableText key={status} text={status} toastMessage="Copied status">
-            <AppCard style={styles.card}><Text style={[styles.status, {color: theme.text}]}>{status}</Text></AppCard>
-          </CopyableText>
+          <AppCard key={status} style={styles.card}>
+            <CopyableText text={status} toastMessage="Copied status" style={[styles.status, {color: theme.text}]} />
+          </AppCard>
         ))}
         <GradientButton title="Generate more" block onPress={() => setOffset(offset + 1)} />
       </ScrollView>
@@ -42,7 +46,7 @@ const styles = StyleSheet.create({
   safe: {flex: 1, backgroundColor: colors.canvas},
   content: {padding: 20, gap: 12},
   chips: {flexDirection: 'row', flexWrap: 'wrap', gap: 8},
-  category: {flexDirection: 'row', flexWrap: 'wrap', gap: 9},
+  category: {gap: 9, paddingBottom: 2},
   card: {shadowOpacity: 0},
   status: {fontSize: 14, lineHeight: 22, color: colors.ink},
 });

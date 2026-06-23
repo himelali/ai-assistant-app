@@ -25,7 +25,7 @@ export function ToneChip({
         {backgroundColor: theme.surface, borderColor: theme.line},
         selected && styles.selected,
       ]}>
-      <Text style={[styles.text, {color: theme.text}, selected && styles.selectedText]}>
+      <Text numberOfLines={1} style={[styles.text, {color: theme.text}, selected && styles.selectedText]}>
         {label}
       </Text>
     </Pressable>
@@ -34,8 +34,8 @@ export function ToneChip({
 
 const styles = StyleSheet.create({
   chip: {
-    flex: 1,
     minHeight: 48,
+    minWidth: 86,
     borderRadius: radius.sm,
     borderWidth: 1,
     borderColor: colors.line,

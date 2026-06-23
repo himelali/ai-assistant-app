@@ -34,18 +34,14 @@ export function RewriteScreen() {
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={[typography.eyebrow, {color: theme.textFaint}]}>Original text</Text>
         <AppCard style={styles.original}>
-          <CopyableText text="I need this fast" toastMessage="Copied original text">
-            <Text style={[typography.body, {color: theme.textSoft}]}>"I need this fast"</Text>
-          </CopyableText>
+          <CopyableText text="I need this fast" toastMessage="Copied original text" style={[typography.body, {color: theme.textSoft}]} />
         </AppCard>
         <Text style={[typography.eyebrow, {color: theme.textFaint}]}>Choose a tone</Text>
         <View style={styles.grid}>{tones.map(item => <ToneChip key={item} label={item} selected={tone === item} onPress={() => choose(item)} />)}</View>
         <Text style={[typography.eyebrow, {color: theme.textFaint}]}>Output preview</Text>
         <AppCard style={styles.output}>
           {loading ? <><AiThinking label="Rewriting tone..." /><View style={styles.skeleton}><SkeletonLine /><SkeletonLine width="70%" /></View></> : (
-            <CopyableText text={output} toastMessage="Copied rewrite">
-              <Text style={[styles.outputText, {color: theme.text}]}>{output}</Text>
-            </CopyableText>
+            <CopyableText text={output} toastMessage="Copied rewrite" style={[styles.outputText, {color: theme.text}]} />
           )}
           <View style={styles.actions}>
             <GradientButton title="Share" small style={styles.action} onPress={() => showToast('Share mocked')} />

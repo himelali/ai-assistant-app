@@ -26,7 +26,6 @@ export const translations = {
   authApple: 'Continue with Apple',
   authNoAccount: "Don't have an account?",
   authSignUp: 'Sign up',
-  authContinueToApp: 'Continue to app',
   signUpTitle: 'Create your TypeAI account',
   signUpIntro: 'Start with a UI-only prototype account. No real auth is connected yet.',
   signUpName: 'Name',

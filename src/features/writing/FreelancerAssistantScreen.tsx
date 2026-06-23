@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {AppScreen} from '../../shared/components/AppScreen';
 import {AiThinking} from '../../shared/components/AiThinking';
 import {AppCard} from '../../shared/components/AppCard';
@@ -8,6 +8,7 @@ import {CopyableText} from '../../shared/components/CopyableText';
 import {GradientButton} from '../../shared/components/GradientButton';
 import {GhostButton} from '../../shared/components/GhostButton';
 import {LanguageChip} from '../../shared/components/LanguageChip';
+import {ReviewedTextInput} from '../../shared/components/ReviewedTextInput';
 import {SkeletonLine} from '../../shared/components/SkeletonLine';
 import {SuggestionCard} from '../../shared/components/SuggestionCard';
 import {useToast} from '../../shared/components/Toast';
@@ -39,19 +40,17 @@ export function FreelancerAssistantScreen() {
         <Text style={[typography.eyebrow, {color: theme.textFaint}]}>Generate type</Text>
         <View style={styles.types}>{types.map(item => <SuggestionCard key={item} label={item} text={item === 'Project proposal' ? 'Tailored pitch from a job post' : item === 'Client reply' ? 'Respond professionally' : 'Gentle no-reply nudge'} selected={type === item} onPress={() => setType(item)} />)}</View>
         <Text style={[typography.eyebrow, {color: theme.textFaint}]}>Job details / context</Text>
-        <TextInput
+        <ReviewedTextInput
           multiline
           defaultValue="Laravel API integration job, client wants backend scaling experience"
           placeholderTextColor={theme.textFaint}
-          style={[styles.textarea, {backgroundColor: theme.surface, borderColor: theme.line, color: theme.text}]}
+          inputStyle={[styles.textarea, {backgroundColor: theme.surface, borderColor: theme.line, color: theme.text}]}
         />
         <GradientButton title="Generate" block onPress={generate} />
         <Text style={[typography.eyebrow, {color: theme.textFaint}]}>Preview output</Text>
         <AppCard>{loading ? <><AiThinking label="Writing..." /><View style={styles.loading}><SkeletonLine /><SkeletonLine width="88%" /><SkeletonLine width="68%" /></View></> : (
           <>
-            <CopyableText text={output} toastMessage="Copied freelancer output">
-              <Text style={[styles.output, {color: theme.text}]}>{output}</Text>
-            </CopyableText>
+            <CopyableText text={output} toastMessage="Copied freelancer output" style={[styles.output, {color: theme.text}]} />
             <View style={styles.actions}><GradientButton title="Copy" small style={styles.action} onPress={() => {copyToClipboard(output); showToast('Copied freelancer output');}} /><GhostButton title="Share" small style={styles.action} onPress={() => showToast('Share mocked')} /><GhostButton title="Regenerate" small style={styles.action} onPress={generate} /></View>
           </>
         )}</AppCard>

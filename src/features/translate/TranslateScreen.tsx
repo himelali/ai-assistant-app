@@ -28,15 +28,11 @@ export function TranslateScreen() {
         <View style={styles.chips}>{langs.map(item => <LanguageChip key={item} label={item} selected={lang === item} onPress={() => setLang(item)} />)}</View>
         <Text style={[typography.eyebrow, {color: theme.textFaint}]}>Original</Text>
         <AppCard style={styles.card}>
-          <CopyableText text={translationOutputs.Bangla} toastMessage="Copied original text">
-            <Text style={[styles.text, {color: theme.text}]}>{translationOutputs.Bangla}</Text>
-          </CopyableText>
+          <CopyableText text={translationOutputs.Bangla} toastMessage="Copied original text" style={[styles.text, {color: theme.text}]} />
         </AppCard>
         <Text style={[typography.eyebrow, {color: theme.textFaint}]}>Translated</Text>
         <AppCard style={styles.card}>
-          <CopyableText text={translated} toastMessage="Copied translation">
-            <Text style={[styles.text, {color: theme.text}]}>{translated}</Text>
-          </CopyableText>
+          <CopyableText text={translated} toastMessage="Copied translation" style={[styles.text, {color: theme.text}]} />
           <View style={styles.actions}><GradientButton title="Share" small style={styles.action} onPress={() => showToast('Share mocked')} /><GhostButton title="Copy" small style={styles.action} onPress={() => {copyToClipboard(translated); showToast('Copied translation');}} /></View>
         </AppCard>
       </ScrollView>

@@ -6,6 +6,7 @@ export type KeyboardPermissionId =
   | 'internet'
   | 'network'
   | 'clipboard'
+  | 'chatApps'
   | 'notifications'
   | 'microphone'
   | 'camera'
@@ -59,6 +60,15 @@ export const keyboardPermissionItems: KeyboardPermissionItem[] = [
       Platform.OS === 'ios'
         ? 'iOS may show paste permission prompts when the keyboard reads copied text.'
         : 'Android keyboard reads copied text from the clipboard after the user taps Use Copy.',
+    status: 'ready',
+  },
+  {
+    id: 'chatApps',
+    title: 'WhatsApp, Messenger, Telegram',
+    body:
+      Platform.OS === 'android'
+        ? 'Works through the TypeAI keyboard after the user selects editable text or copies chat text. Android does not allow replacing another app selection toolbar without restricted accessibility overlays.'
+        : 'Works through the TypeAI keyboard after the user copies chat text. iOS does not allow third-party keyboards to replace another app selection toolbar.',
     status: 'ready',
   },
   {

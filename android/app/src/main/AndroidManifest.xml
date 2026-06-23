@@ -32,6 +32,17 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
+      <activity
+        android:name=".ProcessTextActivity"
+        android:label="@string/typeai_process_text_label"
+        android:exported="true"
+        android:theme="@style/AppTheme">
+        <intent-filter>
+          <action android:name="android.intent.action.PROCESS_TEXT" />
+          <category android:name="android.intent.category.DEFAULT" />
+          <data android:mimeType="text/plain" />
+        </intent-filter>
+      </activity>
       <service
         android:name=".keyboard.TypeAiKeyboardService"
         android:label="@string/typeai_keyboard_name"

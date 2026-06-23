@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
-import {KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
+import {KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {AppScreen} from '../../shared/components/AppScreen';
 import {AiThinking} from '../../shared/components/AiThinking';
 import {AppCard} from '../../shared/components/AppCard';
 import {AppIcon} from '../../shared/components/AppIcon';
 import {CopyableText} from '../../shared/components/CopyableText';
+import {ReviewedTextInput} from '../../shared/components/ReviewedTextInput';
 import {useToast} from '../../shared/components/Toast';
 import {aiReplies} from '../../shared/mock/mockData';
 import {colors} from '../../shared/theme/colors';
@@ -79,9 +80,11 @@ export function AiHubScreen() {
               if (item.role === 'thinking') return <AiThinking key={index} />;
               return (
                 <View key={index} style={[styles.bubble, item.role === 'user' ? styles.userBubble : styles.aiBubble]}>
-                  <CopyableText text={item.text} toastMessage={item.role === 'user' ? 'Copied prompt' : 'Copied AI reply'}>
-                    <Text style={item.role === 'user' ? styles.userText : [styles.aiText, {color: theme.text}]}>{item.text}</Text>
-                  </CopyableText>
+                  <CopyableText
+                    text={item.text}
+                    toastMessage={item.role === 'user' ? 'Copied prompt' : 'Copied AI reply'}
+                    style={item.role === 'user' ? styles.userText : [styles.aiText, {color: theme.text}]}
+                  />
                 </View>
               );
             })
@@ -89,12 +92,13 @@ export function AiHubScreen() {
         </ScrollView>
         {listening ? <Text style={styles.listening}>● Listening...</Text> : null}
         <View style={[styles.composer, {backgroundColor: theme.surface, borderTopColor: theme.line}]}>
-          <TextInput
+          <ReviewedTextInput
             value={text}
             onChangeText={setText}
             placeholder="Ask AI anything..."
             placeholderTextColor={theme.textFaint}
-            style={[styles.input, {backgroundColor: theme.canvas, color: theme.text}]}
+            containerStyle={styles.composerInput}
+            inputStyle={[styles.input, {backgroundColor: theme.canvas, color: theme.text}]}
           />
           <Pressable onPress={mockMic} style={[styles.icon, {backgroundColor: theme.canvas}]}>
             <AppIcon name="microphone-outline" size={20} color={theme.text} />
@@ -126,6 +130,7 @@ const styles = StyleSheet.create({
   aiText: {color: colors.ink, lineHeight: 20},
   listening: {paddingHorizontal: 20, paddingBottom: 6, color: colors.error, fontWeight: '600', fontSize: 11},
   composer: {flexDirection: 'row', alignItems: 'center', gap: 8, borderTopWidth: 1, borderTopColor: colors.line, backgroundColor: colors.surface, padding: 12, paddingBottom: 16},
+  composerInput: {flex: 1},
   input: {flex: 1, minHeight: 40, borderRadius: 22, backgroundColor: colors.surfaceAlt, paddingHorizontal: 14, color: colors.ink, fontSize: 13},
   icon: {width: 40, height: 40, borderRadius: 14, alignItems: 'center', justifyContent: 'center', backgroundColor: colors.surfaceAlt},
   send: {backgroundColor: colors.primaryStart},

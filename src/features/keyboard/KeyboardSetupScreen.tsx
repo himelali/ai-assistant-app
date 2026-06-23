@@ -33,9 +33,14 @@ export function KeyboardSetupScreen() {
   const [keyboardEnabled, setKeyboardEnabled] = useState(false);
   const isAndroid = Platform.OS === 'android';
   const steps = isAndroid
-    ? ['Enable TypeAI Keyboard', 'Select TypeAI as active keyboard', 'Copy message and request AI reply']
-    : ['Enable TypeAI Keyboard extension', 'Copy message and open TypeAI keyboard', 'Request AI reply and paste it'];
-  const flow = ['User copies text from any app', 'TypeAI keyboard reads copied context', 'Mock API returns AI suggestions', 'User inserts or pastes the selected reply'];
+    ? ['Enable TypeAI Keyboard', 'Use TypeAI Add-on from the Android text selection menu when available', 'Select TypeAI in WhatsApp, Messenger, or Telegram for keyboard actions', 'Select editable text or copy chat text', 'Use TypeAI Copy, Remove, and Suggestion actions']
+    : ['Enable TypeAI Keyboard extension', 'Allow Full Access for pasteboard suggestions', 'Copy text in WhatsApp, Messenger, or Telegram', 'Open TypeAI keyboard and request a suggestion'];
+  const flow = [
+    'On Android, supported apps can show TypeAI Add-on beside the host app selection actions. Otherwise the user copies text and opens the TypeAI keyboard.',
+    'TypeAI keyboard receives selected text when the host input allows it, or reads copied text after Use Copy',
+    'Mock API returns a correction or reply suggestion',
+    'User copies the suggestion or inserts it from the TypeAI keyboard',
+  ];
 
   async function refreshKeyboardStatus() {
     const enabled = await isTypeAiKeyboardEnabled();
@@ -91,7 +96,7 @@ export function KeyboardSetupScreen() {
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={[typography.h1, {color: theme.text}]}>Set up TypeAI keyboard helper</Text>
         <Text style={[typography.body, styles.intro, {color: theme.textSoft}]}>
-          TypeAI helps users copy an incoming message, request an AI reply from the keyboard, and paste the selected response. The API response is mocked for now.
+          TypeAI works inside WhatsApp, Messenger, Telegram, and other chat apps through the custom keyboard. On Android, supported apps can also expose TypeAI Add-on as an extra text action beside the host app's own selection menu.
         </Text>
         <AppCard style={styles.statusCard}>
           <Text style={[typography.title, {color: theme.text}]}>Keyboard status</Text>
@@ -115,7 +120,7 @@ export function KeyboardSetupScreen() {
           <AppCard style={styles.flowCard}>
             <Text style={[typography.title, {color: theme.text}]}>iOS behavior</Text>
             <Text style={[typography.body, styles.flowItem, {color: theme.textSoft}]}>
-              iOS users manually enable the TypeAI keyboard extension, copy text from WhatsApp or another app, switch to TypeAI with the globe key, then request a mock AI reply from copied text.
+              iOS users manually enable the TypeAI keyboard extension, allow Full Access for pasteboard-powered suggestions, copy text from WhatsApp or another app, switch to TypeAI with the globe key, then request a mock suggestion.
             </Text>
           </AppCard>
         ) : null}

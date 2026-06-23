@@ -4,6 +4,7 @@ import {
   NativeSyntheticEvent,
   Pressable,
   ScrollView,
+  StatusBar,
   Text,
   useWindowDimensions,
   View,
@@ -57,6 +58,7 @@ export function SplashScreen({navigation}: Props) {
 
   return (
     <View style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor={colors.dark} />
       <View style={[styles.glow, styles.glowA]} />
       <View style={[styles.glow, styles.glowB]} />
       <ScrollView
@@ -68,18 +70,24 @@ export function SplashScreen({navigation}: Props) {
         onMomentumScrollEnd={handleMomentumEnd}
         style={styles.pager}>
         {splashSlides.map((slide, index) => (
-          <Pressable
+          <View
             key={slide.title}
-            accessibilityRole="button"
-            accessibilityLabel={index === splashSlides.length - 1 ? 'Continue' : 'Next splash page'}
-            onPress={() => goToSlide(activeIndex + 1)}
             style={[styles.slide, {width: screenWidth}]}>
             <View style={styles.logo}>
               <AppIcon name={slide.icon} size={38} color={colors.surface} />
             </View>
             <Text style={styles.name}>{index === 0 ? t('appName') : slide.title}</Text>
             <Text style={styles.subtitle}>{index === 0 ? t('appSubtitle') : slide.subtitle}</Text>
-          </Pressable>
+            {index === splashSlides.length - 1 ? (
+              <Pressable
+                accessibilityRole="button"
+                accessibilityLabel="OK, continue"
+                onPress={() => goToSlide(index + 1)}
+                style={({pressed}) => [styles.okButton, pressed && styles.okPressed]}>
+                <Text style={styles.okText}>OK</Text>
+              </Pressable>
+            ) : null}
+          </View>
         ))}
       </ScrollView>
       <View style={styles.dots}>

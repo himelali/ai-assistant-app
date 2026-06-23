@@ -26,11 +26,14 @@ const utilityKeys = [
 
 export function KeyboardPreviewScreen() {
   const replyTypes = ['Professional', 'Friendly', 'Short'] as const;
+  const chatApps = ['WhatsApp', 'Messenger', 'Telegram'] as const;
+  const [chatApp, setChatApp] = useState<(typeof chatApps)[number]>('WhatsApp');
   const [copiedText, setCopiedText] = useState('');
   const [mockSuggestions, setMockSuggestions] = useState(suggestions.smartReplies);
   const [selectedReply, setSelectedReply] = useState<(typeof replyTypes)[number]>('Professional');
   const [loading, setLoading] = useState(false);
   const [insertedReply, setInsertedReply] = useState('');
+  const [previewSuggestion, setPreviewSuggestion] = useState('');
   const {showToast} = useToast();
   const {theme} = useAppTheme();
 
@@ -38,16 +41,19 @@ export function KeyboardPreviewScreen() {
     copyToClipboard(suggestions.incomingMessage);
     setCopiedText(suggestions.incomingMessage);
     setInsertedReply('');
+    setPreviewSuggestion('');
     showToast('Incoming message copied to clipboard');
+    await generateSuggestions(suggestions.incomingMessage);
   }
 
-  async function generateSuggestions() {
-    const context = copiedText || suggestions.incomingMessage;
+  async function generateSuggestions(contextOverride?: string) {
+    const context = contextOverride || copiedText || suggestions.incomingMessage;
     setLoading(true);
     setCopiedText(context);
     const response = await requestKeyboardSuggestions({copiedText: context});
     setMockSuggestions(response.suggestions);
     setSelectedReply('Professional');
+    setPreviewSuggestion(response.suggestions.Professional);
     setLoading(false);
     showToast('Mock API suggestions ready');
   }
@@ -64,15 +70,27 @@ export function KeyboardPreviewScreen() {
       <AppHeader title="Keyboard Preview" />
       <ScrollView contentContainerStyle={styles.content}>
         <View style={[styles.contextCard, {backgroundColor: theme.surface, borderColor: theme.line}]}>
-          <Text style={[typography.eyebrow, {color: theme.textFaint}]}>External app message</Text>
+          <Text style={[typography.eyebrow, {color: theme.textFaint}]}>Chat app</Text>
+          <View style={styles.chatApps}>
+            {chatApps.map(app => (
+              <GhostButton
+                key={app}
+                title={app}
+                small
+                style={[styles.chatAppButton, chatApp === app && styles.chatAppSelected]}
+                onPress={() => setChatApp(app)}
+              />
+            ))}
+          </View>
+          <Text style={[typography.eyebrow, {color: theme.textFaint}]}>{chatApp} message</Text>
           <CopyableText
             text={suggestions.incomingMessage}
             toastMessage="Copied incoming message"
-            containerStyle={[styles.chatBubble, {backgroundColor: theme.canvas}]}>
-            <Text style={[styles.chatText, {color: theme.text}]}>{suggestions.incomingMessage}</Text>
-          </CopyableText>
+            containerStyle={[styles.chatBubble, {backgroundColor: theme.canvas}]}
+            style={[styles.chatText, {color: theme.text}]}
+          />
           <Text style={[styles.contextNote, {color: theme.textFaint}]}>
-            Current flow: user copies text from WhatsApp or any app, TypeAI reads copied context inside the keyboard helper, then requests an AI reply. This prototype uses a mock API response.
+            Current flow: on Android, {chatApp} may show TypeAI Add-on beside its own text actions if that screen supports Process Text. Otherwise, copy a message, open the TypeAI keyboard, then use Copy, Deselect, Remove, or Suggestion. TypeAI does not replace {chatApp}'s own selection popover.
           </Text>
           <GhostButton title="Simulate copy text" small block onPress={simulateCopy} style={styles.cardButton} />
         </View>
@@ -80,21 +98,71 @@ export function KeyboardPreviewScreen() {
         <View style={[styles.aiPanel, {backgroundColor: theme.surface, borderColor: theme.line}]}>
           <View style={styles.aiHeader}>
             <View style={styles.aiMark}><AppIcon name="star-four-points-outline" size={13} color={colors.surface} /></View>
-            <Text style={[typography.eyebrow, {color: theme.textFaint}]}>Mock API suggestions</Text>
+            <Text style={[typography.eyebrow, {color: theme.textFaint}]}>TypeAI keyboard tooltip</Text>
+          </View>
+          <View style={styles.selectionToolbar}>
+            {['Copy', 'Deselect', 'Remove', 'Suggestion'].map(action => (
+              <GhostButton
+                key={action}
+                title={action}
+                small
+                style={styles.selectionAction}
+                onPress={
+                  action === 'Copy'
+                    ? simulateCopy
+                    : action === 'Suggestion'
+                      ? () => generateSuggestions()
+                      : () => {
+                          if (action === 'Remove') {
+                            setCopiedText('');
+                            setInsertedReply('');
+                            setPreviewSuggestion('');
+                            showToast('Selected text removed in preview');
+                            return;
+                          }
+                          setCopiedText('');
+                          setPreviewSuggestion('');
+                          showToast('Selection cleared in preview');
+                        }
+                }
+              />
+            ))}
           </View>
           <View style={[styles.copiedBox, {backgroundColor: theme.canvas, borderColor: theme.line}]}>
             <Text style={[typography.small, {color: theme.textFaint}]}>Copied context</Text>
-            <CopyableText text={copiedText || 'No copied text yet'} toastMessage="Copied context">
-              <Text style={[styles.copiedText, {color: copiedText ? theme.text : theme.textFaint}]}>
-                {copiedText || 'No copied text yet'}
-              </Text>
-            </CopyableText>
+            <CopyableText
+              text={copiedText || 'No copied text yet'}
+              toastMessage="Copied context"
+              style={[styles.copiedText, {color: copiedText ? theme.text : theme.textFaint}]}
+            />
           </View>
+          {previewSuggestion ? (
+            <View style={[styles.suggestionTooltip, {backgroundColor: theme.canvas, borderColor: theme.line}]}>
+              <Text style={[styles.suggestionText, {color: theme.text}]}>{previewSuggestion}</Text>
+              <View style={styles.suggestionActions}>
+                <GradientButton
+                  title="Copy"
+                  small
+                  style={styles.suggestionAction}
+                  onPress={() => {
+                    copyToClipboard(previewSuggestion);
+                    showToast('Copied suggestion');
+                  }}
+                />
+                <GhostButton
+                  title="Cancel"
+                  small
+                  style={styles.suggestionAction}
+                  onPress={() => setPreviewSuggestion('')}
+                />
+              </View>
+            </View>
+          ) : null}
           <GradientButton
             title={loading ? 'Requesting AI...' : 'Request AI suggestion'}
             small
             block
-            onPress={generateSuggestions}
+            onPress={() => generateSuggestions()}
             style={styles.generateButton}
           />
           <View style={styles.options}>
@@ -113,11 +181,11 @@ export function KeyboardPreviewScreen() {
 
         <View style={[styles.typing, {backgroundColor: theme.surface}]}>
           <Text style={[typography.eyebrow, {color: theme.textFaint}]}>Typing area</Text>
-          <CopyableText text={insertedReply || mockSuggestions[selectedReply]} toastMessage="Copied typed reply">
-            <Text style={[styles.typingText, {color: theme.textSoft}]}>
-              {(insertedReply || mockSuggestions[selectedReply])}|
-            </Text>
-          </CopyableText>
+          <CopyableText
+            text={`${insertedReply || mockSuggestions[selectedReply]}|`}
+            toastMessage="Copied typed reply"
+            style={[styles.typingText, {color: theme.textSoft}]}
+          />
         </View>
         <View style={styles.toolbar}>
           {['Reply', 'Translate', 'Fix', 'Rewrite', 'Voice'].map(item => <GradientButton key={item} title={item} small />)}
@@ -145,6 +213,9 @@ const styles = StyleSheet.create({
   safe: {flex: 1, backgroundColor: colors.canvas},
   content: {padding: 18, paddingBottom: 0, gap: 12},
   contextCard: {backgroundColor: colors.surface, borderRadius: 18, borderWidth: 1, borderColor: colors.line, padding: 14},
+  chatApps: {flexDirection: 'row', gap: 8, marginTop: 8, marginBottom: 12},
+  chatAppButton: {flex: 1},
+  chatAppSelected: {backgroundColor: colors.softPurple, borderColor: colors.primaryStart},
   chatBubble: {alignSelf: 'flex-start', maxWidth: '78%', padding: 12, borderRadius: 15, backgroundColor: colors.surfaceAlt, marginTop: 10, marginBottom: 10},
   chatText: {color: colors.ink, fontSize: 13},
   contextNote: {fontSize: 12, lineHeight: 18, color: colors.inkFaint},
@@ -152,8 +223,14 @@ const styles = StyleSheet.create({
   aiPanel: {backgroundColor: 'rgba(255,255,255,0.92)', borderRadius: 22, borderWidth: 1, borderColor: 'rgba(255,255,255,0.75)', padding: 14},
   aiHeader: {flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 12},
   aiMark: {width: 24, height: 24, borderRadius: 8, backgroundColor: colors.primaryStart, borderWidth: 1, borderColor: colors.primaryEnd, alignItems: 'center', justifyContent: 'center'},
+  selectionToolbar: {flexDirection: 'row', gap: 6, marginBottom: 10},
+  selectionAction: {flex: 1},
   copiedBox: {borderWidth: 1, borderRadius: 14, padding: 12, marginBottom: 10},
   copiedText: {fontSize: 13, lineHeight: 19, marginTop: 4},
+  suggestionTooltip: {borderWidth: 1, borderRadius: 14, padding: 12, marginBottom: 10},
+  suggestionText: {fontSize: 13, lineHeight: 19},
+  suggestionActions: {flexDirection: 'row', gap: 8, marginTop: 10},
+  suggestionAction: {flex: 1},
   generateButton: {marginBottom: 12},
   options: {gap: 8, marginBottom: 12},
   typing: {borderWidth: 1, borderStyle: 'dashed', borderColor: colors.accent, borderRadius: 16, padding: 14, backgroundColor: colors.surface},

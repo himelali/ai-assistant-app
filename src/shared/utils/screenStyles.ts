@@ -94,6 +94,24 @@ export const splashStyles = StyleSheet.create({
     marginTop: spacing.sm,
     textAlign: 'center',
   },
+  okButton: {
+    minWidth: 116,
+    minHeight: 46,
+    borderRadius: radius.pill,
+    backgroundColor: colors.accent,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: spacing.xxl,
+    paddingHorizontal: spacing.xxl,
+  },
+  okPressed: {
+    opacity: 0.78,
+  },
+  okText: {
+    color: colors.dark,
+    fontSize: 13,
+    fontWeight: '800',
+  },
   dots: {
     position: 'absolute',
     bottom: 58,

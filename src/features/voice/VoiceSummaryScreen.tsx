@@ -40,10 +40,12 @@ export function VoiceSummaryScreen() {
         <Text style={[typography.eyebrow, {color: theme.textFaint}]}>AI generated summary</Text>
         {sections.map(([title, body]) => (
           <AppCard key={title} style={styles.section}>
-            <CopyableText text={`${title}: ${body}`} toastMessage={`Copied ${title.toLowerCase()}`}>
-              <Text style={styles.sectionTitle}>{title}</Text>
-              <Text style={[typography.body, {color: theme.textSoft}]}>{body}</Text>
-            </CopyableText>
+            <Text style={styles.sectionTitle}>{title}</Text>
+            <CopyableText
+              text={body}
+              toastMessage={`Copied ${title.toLowerCase()}`}
+              style={[typography.body, {color: theme.textSoft}]}
+            />
           </AppCard>
         ))}
         <View style={styles.actions}><GradientButton title="Share" block style={styles.action} onPress={() => showToast('Share mocked')} /><GhostButton title="Copy" block style={styles.action} onPress={() => {copyToClipboard(summaryText); showToast('Copied summary');}} /></View>
