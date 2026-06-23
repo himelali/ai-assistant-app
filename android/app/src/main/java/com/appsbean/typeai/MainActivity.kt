@@ -1,4 +1,4 @@
-package com.typeai
+package com.appsbean.typeai
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

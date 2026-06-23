@@ -5,5 +5,6 @@ module.exports = {
   ],
   moduleNameMapper: {
     '\\.(ttf|otf)$': '<rootDir>/__mocks__/fileMock.js',
+    '^@react-native-clipboard/clipboard$': '<rootDir>/__mocks__/clipboardMock.js',
   },
 };

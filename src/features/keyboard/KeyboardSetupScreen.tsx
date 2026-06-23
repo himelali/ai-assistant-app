@@ -60,7 +60,7 @@ export function KeyboardSetupScreen() {
 
     if (item.status === 'runtime') {
       const granted = await requestKeyboardRuntimePermission(item.id);
-      showToast(granted ? `${item.title} ready` : `${item.title} permission not granted`);
+      showToast(granted ? `${item.title} ready` : `${item.title} permission needs app settings`);
       return;
     }
 

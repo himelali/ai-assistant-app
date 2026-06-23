@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
+import {ScrollView, Text, TextInput, View} from 'react-native';
 import {AppScreen} from '../../shared/components/AppScreen';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {AuthStackParamList} from '../../app/config/routes';
@@ -10,8 +10,8 @@ import {useToast} from '../../shared/components/Toast';
 import {useLocalization} from '../../shared/localization/LocalizationContext';
 import {colors} from '../../shared/theme/colors';
 import {typography} from '../../shared/theme/typography';
-import {radius} from '../../shared/theme/radius';
 import {useAppTheme} from '../../shared/theme/ThemeContext';
+import {loginStyles as styles} from '../../shared/utils/screenStyles';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'Login'>;
 
@@ -47,26 +47,7 @@ export function LoginScreen({navigation}: Props) {
         <Text style={[styles.signup, {color: theme.textSoft}]}>
           {t('authNoAccount')} <Text style={styles.link} onPress={() => navigation.navigate('SignUp')}>{t('authSignUp')}</Text>
         </Text>
-        <GradientButton title={t('authContinueToApp')} block onPress={enterApp} style={styles.prototypeButton} />
       </ScrollView>
     </AppScreen>
   );
 }
-
-const styles = StyleSheet.create({
-  safe: {flex: 1, backgroundColor: colors.canvas},
-  content: {padding: 22, paddingTop: 52},
-  logo: {width: 56, height: 56, borderRadius: 17, backgroundColor: colors.primaryStart, borderWidth: 2, borderColor: colors.accent, alignItems: 'center', justifyContent: 'center', marginBottom: 18},
-  intro: {marginTop: 7, marginBottom: 22},
-  label: {fontSize: 11, color: colors.inkSoft, fontWeight: '600', marginBottom: 6},
-  input: {height: 45, borderRadius: radius.md, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.line, paddingHorizontal: 13, marginBottom: 12, color: colors.ink, fontSize: 13},
-  forgot: {alignSelf: 'flex-end', color: colors.primaryStart, fontWeight: '600', fontSize: 11, marginBottom: 18},
-  divider: {textAlign: 'center', color: colors.inkFaint, fontSize: 11, marginVertical: 15},
-  stackBtn: {marginTop: 10},
-  googleBtn: {backgroundColor: '#4285F4', borderColor: '#4285F4'},
-  facebookBtn: {backgroundColor: '#1877F2', borderColor: '#1877F2'},
-  appleBtn: {backgroundColor: '#000000', borderColor: '#000000'},
-  signup: {textAlign: 'center', color: colors.inkSoft, marginTop: 20, fontSize: 12},
-  link: {color: colors.primaryStart, fontWeight: '600'},
-  prototypeButton: {marginTop: 22},
-});

@@ -1,4 +1,4 @@
-package com.typeai.keyboard
+package com.appsbean.typeai.keyboard
 
 import com.facebook.react.BaseReactPackage
 import com.facebook.react.bridge.NativeModule

@@ -57,7 +57,7 @@ export function SettingsScreen() {
   async function shareTypeAI() {
     const url = Platform.select({
       ios: 'https://apps.apple.com/app/typeai-ai-keyboard/id0000000000',
-      android: 'https://play.google.com/store/apps/details?id=com.himelali.typeai',
+      android: 'https://play.google.com/store/apps/details?id=com.appsbean.typeai',
       default: 'https://typeai.app',
     });
     await Share.share({
@@ -70,7 +70,7 @@ export function SettingsScreen() {
   async function rateTypeAI() {
     const url = Platform.select({
       ios: 'itms-apps://itunes.apple.com/app/id0000000000?action=write-review',
-      android: 'market://details?id=com.himelali.typeai',
+      android: 'market://details?id=com.appsbean.typeai',
       default: 'https://typeai.app',
     });
 

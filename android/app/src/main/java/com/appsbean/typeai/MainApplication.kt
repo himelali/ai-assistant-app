@@ -1,4 +1,4 @@
-package com.typeai
+package com.appsbean.typeai
 
 import android.app.Application
 import com.facebook.react.PackageList
@@ -6,7 +6,7 @@ import com.facebook.react.ReactApplication
 import com.facebook.react.ReactHost
 import com.facebook.react.ReactNativeApplicationEntryPoint.loadReactNative
 import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
-import com.typeai.keyboard.KeyboardSettingsPackage
+import com.appsbean.typeai.keyboard.KeyboardSettingsPackage
 
 class MainApplication : Application(), ReactApplication {
 

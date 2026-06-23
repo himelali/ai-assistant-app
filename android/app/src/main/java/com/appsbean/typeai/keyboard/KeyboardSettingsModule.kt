@@ -1,4 +1,4 @@
-package com.typeai.keyboard
+package com.appsbean.typeai.keyboard
 
 import android.content.Context
 import android.content.Intent

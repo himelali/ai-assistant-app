@@ -94,7 +94,7 @@ export const keyboardPermissionItems: KeyboardPermissionItem[] = [
 export async function requestKeyboardRuntimePermission(id: KeyboardPermissionId) {
   if (Platform.OS !== 'android') {
     await Linking.openSettings();
-    return true;
+    return false;
   }
 
   const permission = getAndroidRuntimePermission(id);
@@ -102,8 +102,23 @@ export async function requestKeyboardRuntimePermission(id: KeyboardPermissionId)
     return true;
   }
 
-  const result = await PermissionsAndroid.request(permission);
-  return result === PermissionsAndroid.RESULTS.GRANTED;
+  const alreadyGranted = await PermissionsAndroid.check(permission);
+  if (alreadyGranted) {
+    return true;
+  }
+
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    const result = await PermissionsAndroid.request(permission);
+    if (result === PermissionsAndroid.RESULTS.GRANTED) {
+      return true;
+    }
+    if (result === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
+      break;
+    }
+  }
+
+  await Linking.openSettings();
+  return false;
 }
 
 export async function openPermissionSettings() {

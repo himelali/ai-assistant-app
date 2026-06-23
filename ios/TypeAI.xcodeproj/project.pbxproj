@@ -384,7 +384,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.himelali.typeai;
+				PRODUCT_BUNDLE_IDENTIFIER = com.appsbean.typeai;
 				PRODUCT_NAME = TypeAI;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -415,7 +415,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.himelali.typeai;
+				PRODUCT_BUNDLE_IDENTIFIER = com.appsbean.typeai;
 				PRODUCT_NAME = TypeAI;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_VERSION = 5.0;
@@ -593,7 +593,7 @@
 				INFOPLIST_FILE = TypeAIKeyboard/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.himelali.typeai.keyboard;
+				PRODUCT_BUNDLE_IDENTIFIER = com.appsbean.typeai.keyboard;
 				PRODUCT_BUNDLE_PACKAGE_TYPE = "XPC!";
 				PRODUCT_NAME = TypeAIKeyboard;
 				SDKROOT = iphoneos;
@@ -615,7 +615,7 @@
 				INFOPLIST_FILE = TypeAIKeyboard/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.himelali.typeai.keyboard;
+				PRODUCT_BUNDLE_IDENTIFIER = com.appsbean.typeai.keyboard;
 				PRODUCT_BUNDLE_PACKAGE_TYPE = "XPC!";
 				PRODUCT_NAME = TypeAIKeyboard;
 				SDKROOT = iphoneos;
